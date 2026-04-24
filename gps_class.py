@@ -19,8 +19,8 @@ class GPSVis(object):
         self.map_path = map_path
 
         self.result_image = Image
-        self.x_ticks = []
-        self.y_ticks = []
+        # self.x_ticks = []
+        # self.y_ticks = []
 
     def plot_map(self, output='save', save_as='resultMap.png'):
         """
@@ -32,8 +32,8 @@ class GPSVis(object):
         # self.get_ticks()
         fig, axis1 = plt.subplots()#figsize=(10, 10))
         axis1.imshow(self.result_image)
-        axis1.set_xlabel('Longitude')
-        axis1.set_ylabel('Latitude')
+        # axis1.set_xlabel('Longitude')
+        # axis1.set_ylabel('Latitude')
         # axis1.set_xticklabels(self.x_ticks)
         # axis1.set_yticklabels(self.y_ticks)
         # axis1.grid()
@@ -51,7 +51,7 @@ class GPSVis(object):
         """
         data = pd.read_csv(self.data_path, names=['LATITUDE', 'LONGITUDE'], sep=',')
 
-        self.result_image = Image.open(self.map_path, 'r')
+        self.result_image = Image.open(self.map_path, 'r')  #here the map png is being read and applied to the variable "result.image"
         img_points = []
         gps_data = tuple(zip(data['LATITUDE'].values, data['LONGITUDE'].values))
         for d in gps_data:
@@ -79,17 +79,17 @@ class GPSVis(object):
         # image - (0, 0) in upper left corner; coordinate system - (0, 0) in lower left corner
         return int(x), h_w[1] - int(y)
 
-    def get_ticks(self):
-        """
-        Generates custom ticks based on the GPS coordinates of the map for the matplotlib output.
-        :return:
-        """
-        self.x_ticks = map(
-            lambda x: round(x, 4),
-            np.linspace(self.points[1], self.points[3], num=7))
-        y_ticks = map(
-            lambda x: round(x, 4),
-            np.linspace(self.points[2], self.points[0], num=8))
-        # Ticks must be reversed because the orientation of the image in the matplotlib.
-        # image - (0, 0) in upper left corner; coordinate system - (0, 0) in lower left corner
-        self.y_ticks = sorted(y_ticks, reverse=True)
+    # def get_ticks(self):
+    #     """
+    #     Generates custom ticks based on the GPS coordinates of the map for the matplotlib output.
+    #     :return:
+    #     """
+    #     self.x_ticks = map(
+    #         lambda x: round(x, 4),
+    #         np.linspace(self.points[1], self.points[3], num=7))
+    #     y_ticks = map(
+    #         lambda x: round(x, 4),
+    #         np.linspace(self.points[2], self.points[0], num=8))
+    #     # Ticks must be reversed because the orientation of the image in the matplotlib.
+    #     # image - (0, 0) in upper left corner; coordinate system - (0, 0) in lower left corner
+    #     self.y_ticks = sorted(y_ticks, reverse=True)
